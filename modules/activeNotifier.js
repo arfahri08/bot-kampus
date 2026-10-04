@@ -19,19 +19,10 @@ function getConfiguredNotificationGroupJid() {
     return botNotificationTarget.validateBotNotificationGroupJid?.(target) ? target : ""
 }
 
-function getFallbackPrivateJid(legacyFallbackTargets = []) {
-    const candidates = [...new Set((legacyFallbackTargets || []).map(normalizeJid).filter(Boolean))]
-    return candidates.find(jid => jid.endsWith("@s.whatsapp.net"))
-        || candidates.find(jid => !jid.endsWith("@g.us") && jid !== "status@broadcast" && !jid.endsWith("@newsletter"))
-        || ""
-}
-
-function getTargets(legacyFallbackTargets = []) {
+function getTargets() {
     if (!isActiveNotificationEnabled()) return []
     const configuredGroup = getConfiguredNotificationGroupJid()
-    if (configuredGroup) return [configuredGroup]
-    const privateFallback = getFallbackPrivateJid(legacyFallbackTargets)
-    return privateFallback ? [privateFallback] : []
+    return configuredGroup ? [configuredGroup] : []
 }
 
 function formatJakartaTime(date = new Date()) {
@@ -83,7 +74,7 @@ async function notifyActive(sock, legacyFallbackTargets = [], options = {}) {
             console.log("[ACTIVE] Log aktif terkirim", {
                 jid,
                 type: options.reason || "active-startup-reconnect",
-                target: jid.endsWith("@g.us") ? "configured-group" : "private-fallback",
+                target: "configured-group",
             })
         } catch (error) {
             console.log("[ACTIVE] Gagal mengirim log aktif", {
@@ -100,6 +91,5 @@ module.exports = {
     notifyActive,
     getTargets,
     getConfiguredNotificationGroupJid,
-    getFallbackPrivateJid,
     getActiveText,
 }

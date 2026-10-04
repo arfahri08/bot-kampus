@@ -73,7 +73,7 @@ async function run() {
     try {
         assert.deepStrictEqual(
             activeNotifier.getTargets(["628111111111@s.whatsapp.net"]),
-            ["628111111111@s.whatsapp.net"]
+            []
         )
     } finally {
         targetModule.getBotNotificationGroupJid = originalGetTarget

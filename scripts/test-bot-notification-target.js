@@ -81,6 +81,13 @@ async function main() {
     assert.ok(commandSock.sent.some(item => item.jid === GROUP_JID))
     assert.ok(commandSock.sent.some(item => item.jid === OWNER_JID && item.content.text.includes("berhasil")))
 
+    delete process.env.BOT_NOTIFICATION_GROUP_JID
+    assert.deepStrictEqual(
+        activeNotifier.getTargets([OWNER_JID]),
+        [],
+        "notifikasi aktif tidak boleh fallback ke nomor pribadi saat target grup kosong"
+    )
+
     console.log("PASS bot notification target routes active/restart-compatible and auto-reply notifications to group only")
 }
 
