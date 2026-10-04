@@ -1,0 +1,132 @@
+﻿# Dependencies
+node_modules/
+
+# WhatsApp session â€” jangan pernah masuk GitHub
+auth/
+
+# Environment dan secret
+.env
+.env.*
+!.env.example
+
+# SFTP credential
+.vscode/sftp.json
+data/sftp.json
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.log
+*.zip
+
+# Runtime lock
+data/runtime.lock
+data/restartNotice.json
+data/callFirstVoiceState.json
+data/callFirstVoiceState.json.*.tmp
+data/groupUtilityState.json
+data/groupUtilityState.json.tmp-*
+data/groupRemoteControl.json
+data/commandRateLimit.json
+data/broadcastState.json
+data/broadcastState.json.tmp-*
+data/broadcast-media/
+data/contactPushState.json
+data/contactPushState.json.tmp-*
+data/contact-push-media/
+data/commerceState.json
+data/commerceState.json.tmp-*
+data/statusAutomation.json
+data/statusAutomation.json.tmp-*
+data/jadibotConfig.json
+data/jadibotConfig.json.tmp-*
+data/jadibot-sessions/
+data/nsfwModeration.json
+data/nsfwModeration.json.tmp-*
+MEMORI_*.txt
+SECURITY-RESEARCH-GUIDE-v1.0.0.txt
+
+# Cached media
+data/deleted_media/
+data/viewonce2_media/
+
+# Runtime message cache/log
+data/deleted_messages.json
+data/viewonce2_logs.json
+data/statusCache.json
+
+# Personal/runtime state
+data/lidAliases.json
+data/contactNames.json
+data/stats.json
+data/statusInbox.json
+data/reactionActions.json
+data/antiToxicControl.json
+data/antiToxicReflections.json
+data/autoReply.json
+data/customAutoReply.json
+data/messageEditGuardian.json
+data/replies.json
+data/reminder.json
+data/birthday.json
+data/blocklist.json
+crm.json
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+# Local patch backups
+.patch-backups/
+# WA security research runtime state
+data/waSecurityResearch.json
+data/waSecurityResearch.json.tmp-*
+# Exclusive group agent runtime state
+data/exclusiveAgentState.json
+data/exclusiveAgentState.json.tmp-*
+
+# Private Agent runtime context
+data/agentprivate/state.json
+data/agentprivate/state.json.tmp-*
+
+# Additional secrets and local runtime artifacts
+auth-*/
+session/
+sessions/
+*.session
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.backup
+*.secret
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+data/**/*.jsonl
+data/**/*.jsonl.gz
+data/agentprivate/
+data/exclusiveAgent*.json
+data/exclusiveAgent*.jsonl
+data/exclusiveAgent*.jsonl.gz
+data/media/
+data/fake_vn_tmp/
+data/sticker_tmp/
+data/tg_sticker_temp/
+data/sticker-safety-cache/
+data/tesseract-cache/*
+!data/tesseract-cache/.gitkeep
+data/securityMediaLog.json
+data/brankas_vo.json
+data/botStatus.json
+data/manualAutoReplyPause.json
+data/mediaCleanupState.json
+data/stickerPack.json
+scripts/__pycache__/
+.history/
+.cache/
+# End of local-only exclusions
+
