@@ -14,6 +14,10 @@ process.env.CALL_TERMINATE_GRACE_MS = "250";
 process.env.CALL_FIRST_VOICE_ENABLED = "true";
 process.env.CALL_FIRST_VOICE_RESET_MS = "0";
 process.env.CALL_SPAM_THRESHOLD = "99";
+// Nomor konfigurasi sengaja berbeda dari akun socket. Balasan missed call
+// wajib menyebut akun bot aktif, bukan salah satu nomor konfigurasi ini.
+process.env.CALL_OWNER_JID = "6287777777777@s.whatsapp.net";
+process.env.OWNER_JID = "6286666666666@s.whatsapp.net";
 
 const callHandler = require("../modules/callHandler");
 
@@ -121,6 +125,9 @@ async function run() {
     messages = callerMessages(sock);
     assert.strictEqual(messages.length, 2, "panggilan kedua harus mendapat satu balasan tambahan");
     assert.match(messages[1].content.text, /tidak bisa dihubungi lewat telepon/i);
+    assert.match(messages[1].content.text, /@6289999999999\b/, "warning harus menyebut nomor akun bot aktif");
+    assert.deepStrictEqual(messages[1].content.mentions, ["6289999999999@s.whatsapp.net"]);
+    assert.doesNotMatch(messages[1].content.text, /6287777777777|6286666666666/, "nomor konfigurasi tidak boleh disebut");
 
     sock.ev.emit("call", [{ id: "SECOND", from: CALLER, status: "terminate", duration: 0 }]);
     await wait();
