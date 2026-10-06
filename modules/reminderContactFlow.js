@@ -180,9 +180,9 @@ async function startFlow(sock, chatJid) {
     const sent = await sendPrompt(sock, chatJid, [
         "⏰ *BUAT REMINDER BARU*",
         "",
-        "Silakan kirim *kontak* atau *list beberapa kontak* yang akan menerima reminder.",
+        "Silakan kirim *kontak WhatsApp* atau ketik *nomor tujuan* yang akan menerima pesan terjadwal.",
         "",
-        "Tidak perlu mengetik nomor satu per satu.",
+        "Bisa satu target atau beberapa kontak/nomor sekaligus.",
         "Ketik *batal* untuk membatalkan.",
     ].join("\n"))
     sessions.set(key, {
@@ -198,7 +198,7 @@ async function startFlow(sock, chatJid) {
 }
 
 function isStartCommand(text) {
-    return /^\.(?:remind|reminder)$/i.test(String(text || "").trim())
+    return /^(?:\.(?:remind|reminder|jadwal)|!jadwal)$/i.test(String(text || "").trim())
 }
 
 function isDirectLegacyCommand(text) {
@@ -242,8 +242,8 @@ async function handleReminderContactFlow(sock, msg, context = {}) {
             await editPrompt(sock, session, [
                 "⚠️ *KONTAK BELUM TERDETEKSI*",
                 "",
-                "Kirim contact card atau list kontak dari WhatsApp.",
-                "Nomor teks hanya dipakai sebagai koreksi bila contact card terbaca salah.",
+                "Kirim contact card/list kontak dari WhatsApp atau ketik nomor tujuan.",
+                "Contoh nomor: *081234567890* atau *6281234567890*.",
             ].join("\n"))
             return true
         }

@@ -27,6 +27,26 @@ function contactEntry(name, number) {
 
 async function run() {
     flow.disposeReminderContactFlow()
+
+    for (const alias of [".jadwal", "!jadwal"]) {
+        const aliasSends = []
+        const aliasSock = {
+            async sendMessage(targetJid, outbound) {
+                aliasSends.push({ targetJid, outbound })
+                return { key: { id: `prompt-${alias}`, remoteJid: targetJid, fromMe: true } }
+            },
+        }
+        const handled = await flow.handleReminderContactFlow(aliasSock, message(alias), {
+            from: OWNER_CHAT,
+            text: alias,
+            isGroup: false,
+            isOwner: true,
+        })
+        assert.equal(handled, true, `${alias} starts scheduled-message wizard`)
+        assert(aliasSends[0].outbound.text.includes("nomor tujuan"))
+        flow.disposeReminderContactFlow()
+    }
+
     const sends = []
     const reminderCalls = []
     const promptKey = { id: "prompt-1", remoteJid: OWNER_CHAT, fromMe: true }
@@ -54,7 +74,8 @@ async function run() {
     assert.equal(handled, true, "exact .remind starts wizard")
     assert.equal(sends.length, 1)
     assert(!sends[0].outbound.edit, "first prompt is a new message")
-    assert(sends[0].outbound.text.includes("kirim *kontak*"))
+    assert(sends[0].outbound.text.includes("kontak WhatsApp"))
+    assert(sends[0].outbound.text.includes("nomor tujuan"))
 
     const contactMessage = {
         contactsArrayMessage: {
